@@ -10,7 +10,7 @@ public class Pelicula {
 		this.idPelicula = idPelicula;
 		this.pelicula = pelicula;
 	}
-
+	
 	public int getIdPelicula() {
 		return idPelicula;
 	}
@@ -25,6 +25,11 @@ public class Pelicula {
 
 	public void setPelicula(String pelicula) {
 		this.pelicula = pelicula;
+	}
+	
+	//Importante agregar toString para devolver las peliculas
+	public String toString() {
+		return "\n Pelicula: idPelicula: "+ idPelicula + ", "+pelicula;
 	}
 
 }
