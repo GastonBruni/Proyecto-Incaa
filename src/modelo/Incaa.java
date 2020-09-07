@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Incaa {
-	private List<Pelicula> lstPeliculas;
+	private List<Pelicula> catalogo;
 
 	//Sin parametros dentro del Constructor - Creamos las listas
 	public Incaa() {
-		this.lstPeliculas = new ArrayList<Pelicula>();;
+		this.catalogo = new ArrayList<Pelicula>();;
 	}
 
 	// Agrego getters and setters
 	public List<Pelicula> getLstPeliculas() {
-		return lstPeliculas;
+		return catalogo;
 	}
 
 	public void setLstPeliculas(List<Pelicula> lstPeliculas) {
-		this.lstPeliculas = lstPeliculas;
+		this.catalogo = lstPeliculas;
 	}
 
 	
@@ -32,17 +32,31 @@ public class Incaa {
 			}
 		}
 		int idPelicula = 1;
-		if (!lstPeliculas.isEmpty()) {
-			idPelicula = lstPeliculas.get(lstPeliculas.size() - 1).getIdPelicula() + 1;
+		if (!catalogo.isEmpty()) {
+			idPelicula = catalogo.get(catalogo.size() - 1).getIdPelicula() + 1;
 		}
-		return lstPeliculas.add(new Pelicula(idPelicula, pelicula));
+		return catalogo.add(new Pelicula(idPelicula, pelicula));
+	}
+	
+	public boolean agregarPelicula(String pelicula, Genero genero) throws Exception {
+		// Declaro For-Each
+		for (Pelicula p : this.traerPelicula()) {
+			if (p.getPelicula().equals(pelicula)) {
+				throw new Exception("Error: La pelicula ya fue cargada");
+			}
+		}
+		int idPelicula = 1;
+		if (!catalogo.isEmpty()) {
+			idPelicula = catalogo.get(catalogo.size() - 1).getIdPelicula() + 1;
+		}
+		return catalogo.add(new Pelicula(idPelicula, pelicula, genero));
 	}
 
 	// Agrego este caso de uso que solamente devuelve la lista de peliculas para que
 	// sea llamado en traerAuspiciante.
 
 	public List<Pelicula> traerPelicula() {
-		return this.lstPeliculas;
+		return this.catalogo;
 	}
 
 	// + traerPelicula (int idPelicula) : Pelicula ,Si la película no existe
@@ -54,6 +68,19 @@ public class Incaa {
 
 		for (Pelicula p : this.traerPelicula()) {
 			if (p.getIdPelicula() == idPelicula) {
+				pelicula = p;
+			}
+		}
+		return pelicula;
+	}
+	
+	//Sobrecarga de metodo
+	public Pelicula traerPelicula(Genero genero) {
+
+		Pelicula pelicula = null;
+
+		for (Pelicula p : this.traerPelicula()) {
+			if (p.getGenero() == genero) {
 				pelicula = p;
 			}
 		}
@@ -97,7 +124,7 @@ public class Incaa {
 		if (pelicula == null) {
 			throw new Exception("Error: La pelicula no existe");
 		} else {
-			lstPeliculas.remove(pelicula);
+			catalogo.remove(pelicula);
 		}
 		return true;
 	}
